@@ -8,21 +8,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LauncherConstants;
 
 public class Launcher extends SubsystemBase {
-    private final TalonFX masterMotor;
-    private final TalonFX followerMotor;
+    public final TalonFX masterMotor;
+    public final TalonFX followerMotor;
 
     public Launcher(TalonFX masterMotor, TalonFX followerMotor) {
         this.masterMotor = masterMotor;
         this.followerMotor = followerMotor;
-    }
-
-    public void setMotors(double speed) {
-        // for setting the speed in the command file
-        masterMotor.setControl(LauncherConstants.kLauncherVoltageOut.withOutput(speed));
         // motors going opposite directions, change to false if they need to go the same direction for any reason
         followerMotor.setControl(new Follower(masterMotor.getDeviceID(), true));
         // set the mode to coast; motors will slowly lose speed when we stop giving them power.
         masterMotor.setNeutralMode(NeutralModeValue.Coast);
         followerMotor.setNeutralMode(NeutralModeValue.Coast);
+    }
+
+    public void setMotors(double speed) {
+        // for setting the speed in the command file
+        masterMotor.setControl(LauncherConstants.kLauncherVoltageOut.withOutput(speed));
+        
     }
 }

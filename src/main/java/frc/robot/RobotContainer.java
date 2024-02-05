@@ -12,6 +12,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -39,21 +40,20 @@ public class RobotContainer {
   private final JoystickButton b = new JoystickButton(leftJoystick, 4);
   private final JoystickButton trigger = new JoystickButton(leftJoystick, 1);
   private final JoystickButton resetButton = new JoystickButton(leftJoystick, 5);
-
-
+  
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
-
+  
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-      .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+      .withDeadband(MaxSpeed * 0.075).withRotationalDeadband(MaxAngularRate * 0.075) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
                                                                // driving in open loop
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   //private final Telemetry logger = new Telemetry(MaxSpeed);
-
-  // private final Launcher s_Launcher = new Launcher(new TalonFX(Constants.LauncherConstants.leftGripper), new TalonFX(Constants.LauncherConstants.rightGripper));
-  // private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle));
-  // private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer));
+  
+  private final Launcher s_Launcher = new Launcher(new TalonFX(Constants.LauncherConstants.leftGripper), new TalonFX(Constants.LauncherConstants.rightGripper));
+  private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle));
+  private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer));
 
   private void configureBindings() {
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -79,27 +79,18 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
-    // long temp = System.currentTimeMillis();
 
-    // s_Launcher.setDefaultCommand(
-    //   new TeleopLauncher(s_Launcher, soloJoystick)
-    //   );
+    s_Launcher.setDefaultCommand(
+      new TeleopLauncher(s_Launcher, soloJoystick)
+    );
 
-    // long temp2 = System.currentTimeMillis();
-    // DriverStation.reportError("launcher time" + (temp2- temp), false);
+    s_Angle.setDefaultCommand(
+      new TeleopAngle(s_Angle, soloJoystick)
+    );
 
-    // s_Angle.setDefaultCommand(
-    //   new TeleopAngle(s_Angle, soloJoystick)
-    // );
-    // long temp3 = System.currentTimeMillis();
-    // DriverStation.reportError("angle time" + (temp3- temp2),false);
-
-    // s_Indexer.setDefaultCommand(
-    //   new TeleopIndexer(s_Indexer, soloJoystick)
-    // );
-
-    // long temp4 = System.currentTimeMillis();
-    // DriverStation.reportError("Indexer time" + (temp4- temp3), false);
+    s_Indexer.setDefaultCommand(
+      new TeleopIndexer(s_Indexer, soloJoystick)
+    );
 
   }
 
