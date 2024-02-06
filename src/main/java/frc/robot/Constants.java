@@ -5,7 +5,7 @@
 package frc.robot;
 
 import com.ctre.phoenix6.controls.VoltageOut;
-
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -21,6 +21,7 @@ public final class Constants {
     // setting up the motors for the launcher to ID 24 and ID 23
     public static final int leftGripper = 24;
     public static final int rightGripper = 23;
+
 
   }
   public static final class AngleConstants{

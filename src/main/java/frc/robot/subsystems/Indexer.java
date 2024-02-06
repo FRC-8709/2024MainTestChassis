@@ -11,11 +11,12 @@ public class Indexer extends SubsystemBase {
 
     public Indexer(TalonFX IndexMotor) {
         this.IndexMotor = IndexMotor;
+        IndexMotor.setNeutralMode(NeutralModeValue.Coast);
     }
 
     public void setMotors(double speed) {
         // for setting the speed in the command file
         IndexMotor.setControl(LauncherConstants.kLauncherVoltageOut.withOutput(speed));
-        IndexMotor.setNeutralMode(NeutralModeValue.Coast);
+        
     }
 }

@@ -47,9 +47,6 @@ public class TeleopLauncher extends Command {
     else {
       subsystem.setMotors(0);
     }
-
-    finished = true;
-
   }
   
 
@@ -62,6 +59,6 @@ public class TeleopLauncher extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return false;
   }
 }

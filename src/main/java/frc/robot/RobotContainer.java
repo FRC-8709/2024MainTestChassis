@@ -44,7 +44,7 @@ public class RobotContainer {
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-      .withDeadband(MaxSpeed * 0.075).withRotationalDeadband(MaxAngularRate * 0.075) // Add a 10% deadband
+      .withDeadband(MaxSpeed * 0.075).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
       .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
                                                                // driving in open loop
   private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -54,6 +54,23 @@ public class RobotContainer {
   private final Launcher s_Launcher = new Launcher(new TalonFX(Constants.LauncherConstants.leftGripper), new TalonFX(Constants.LauncherConstants.rightGripper));
   private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle));
   private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer));
+
+  public RobotContainer() {
+    configureBindings();
+
+    s_Launcher.setDefaultCommand(
+      new TeleopLauncher(s_Launcher, soloJoystick)
+    );
+
+    s_Angle.setDefaultCommand(
+      new TeleopAngle(s_Angle, soloJoystick)
+    );
+
+    s_Indexer.setDefaultCommand(
+      new TeleopIndexer(s_Indexer, soloJoystick)
+    );
+
+  }
 
   private void configureBindings() {
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -77,22 +94,7 @@ public class RobotContainer {
     //drivetrain.registerTelemetry(logger::telemeterize);
   }
 
-  public RobotContainer() {
-    configureBindings();
-
-    s_Launcher.setDefaultCommand(
-      new TeleopLauncher(s_Launcher, soloJoystick)
-    );
-
-    s_Angle.setDefaultCommand(
-      new TeleopAngle(s_Angle, soloJoystick)
-    );
-
-    s_Indexer.setDefaultCommand(
-      new TeleopIndexer(s_Indexer, soloJoystick)
-    );
-
-  }
+  
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");

@@ -40,8 +40,6 @@ public class TeleopIndexer extends Command {
       subsystem.setMotors(0);
     }
     
-    finished = true;
-
   }
   
 
@@ -54,6 +52,6 @@ public class TeleopIndexer extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return finished;
+    return false;
   }
 }
