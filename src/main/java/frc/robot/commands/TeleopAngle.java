@@ -33,12 +33,12 @@ public class TeleopAngle extends Command {
     // 6 volts != 50% speed
     //set button number 1 - 12 on joystick : all labled ex; button 1 is trigger
 
-    if (soloStick.getRawButton(3)) {
+    if (soloStick.getRawButton(6)) {
       //up
-      subsystem.setMotors(2); 
+      subsystem.setMotors(3); 
     } else if (soloStick.getRawButton(4)) {
       //down
-      subsystem.setMotors(-2); 
+      subsystem.setMotors(-3); 
     } else {
       subsystem.setMotors(0);
     }

@@ -52,7 +52,7 @@ public class RobotContainer {
   //private final Telemetry logger = new Telemetry(MaxSpeed);
   
   private final Launcher s_Launcher = new Launcher(new TalonFX(Constants.LauncherConstants.leftGripper), new TalonFX(Constants.LauncherConstants.rightGripper));
-  private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle));
+  private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle),6, 5);
   private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer));
 
   public RobotContainer() {

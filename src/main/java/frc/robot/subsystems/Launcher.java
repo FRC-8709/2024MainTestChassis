@@ -15,7 +15,8 @@ public class Launcher extends SubsystemBase {
     public Launcher(TalonFX masterMotor, TalonFX followerMotor) {
         this.masterMotor = masterMotor;
         this.followerMotor = followerMotor;
-                
+        masterMotor.setNeutralMode(NeutralModeValue.Brake);
+        followerMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     public void setMotors(double speed) {

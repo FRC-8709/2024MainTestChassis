@@ -13,9 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class TeleopLauncher extends Command {
   private final Launcher subsystem;
   private final Joystick soloStick;
-  private boolean finished = false;
   public boolean toggle = false;
-
+  private int speed = 0;
   public TeleopLauncher(Launcher subsystem, Joystick soloStick) {
     this.subsystem = subsystem;
     //solo stick is the joystick on the far right; all functions not for driving go on this joystick
@@ -34,19 +33,30 @@ public class TeleopLauncher extends Command {
     // 6 volts != 50% speed
     //set button number 1 - 12 on joystick : all labled ex; button 1 is trigger
 
-    if (soloStick.getRawButton(1)) {
+    //if (soloStick.getRawButton(1) && toggle == false) {
+      if (soloStick.getRawButton(1)){
       //toggle is so its only a button press, not a button hold
-      toggle = true;
-    }else if (soloStick.getRawButton(2)) {
-      toggle = false;
+      speed = -6;
+      //toggle = true;
+    }else if (soloStick.getRawButton(5)) {
+      speed = 3;
+      //toggle = true;
     }
-    if(toggle){
+    else if(soloStick.getRawButton(2)){
+      speed = 0;
+    }
+
+    subsystem.setMotors(speed);
+
+    /*
+    if(speed != 0){
       // - NEGATIVE VALUES ONLY
-        subsystem.setMotors(-6);
+        subsystem.setMotors(speed);
     }
     else {
       subsystem.setMotors(0);
     }
+    */
   }
   
 

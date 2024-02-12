@@ -32,9 +32,9 @@ public class TeleopIndexer extends Command {
     //voltage goes up to 12, not linear
     // 6 volts != 50% speed
     //set button number 1 - 12 on joystick : all labled ex; button 1 is trigger
-    if (soloStick.getRawButton(9)) {
+    if (soloStick.getRawButton(11)) {
       subsystem.setMotors(6); 
-    } else if (soloStick.getRawButton(10)) {
+    } else if (soloStick.getRawButton(9)) {
       subsystem.setMotors(-6); 
     } else {
       subsystem.setMotors(0);
