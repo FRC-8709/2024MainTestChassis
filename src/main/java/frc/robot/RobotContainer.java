@@ -8,6 +8,8 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,10 +22,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.TeleopAngle;
 import frc.robot.commands.TeleopIndexer;
+import frc.robot.commands.TeleopIntakeAngle;
 import frc.robot.commands.TeleopLauncher;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AngleSubsystem;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.IntakeAngle;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -54,6 +58,7 @@ public class RobotContainer {
   private final Launcher s_Launcher = new Launcher(new TalonFX(Constants.LauncherConstants.leftGripper), new TalonFX(Constants.LauncherConstants.rightGripper));
   private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle),6, 5);
   private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer));
+  private final IntakeAngle s_IntakeAngle = new IntakeAngle(new CANSparkMax(Constants.IntakeAngleConstants.IntakeAngle, CANSparkMax.MotorType.kBrushless));
 
   public RobotContainer() {
     configureBindings();
@@ -68,6 +73,10 @@ public class RobotContainer {
 
     s_Indexer.setDefaultCommand(
       new TeleopIndexer(s_Indexer, soloJoystick)
+    );
+
+    s_IntakeAngle.setDefaultCommand(
+      new TeleopIntakeAngle(s_IntakeAngle, soloJoystick)
     );
 
   }

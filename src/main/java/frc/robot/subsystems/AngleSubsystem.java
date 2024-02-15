@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -16,6 +17,10 @@ public class AngleSubsystem extends SubsystemBase {
     public final TalonFX masterMotor;
     public final TalonFX followerMotor;
     private Encoder armEncoder;
+    
+
+    //private double temp = masterMotor.getEncoder;
+    
 
     public AngleSubsystem(TalonFX masterMotor, TalonFX followerMotor, int channelA, int channelB) {
         this.masterMotor = masterMotor;
@@ -23,7 +28,7 @@ public class AngleSubsystem extends SubsystemBase {
         followerMotor.setControl(new Follower(masterMotor.getDeviceID(), true));
         //set the mode to brake. make motor hard stop
         this.armEncoder = new Encoder(channelA, channelB);
-        masterMotor.config_kP(0, 0.23);
+        
         masterMotor.setNeutralMode(NeutralModeValue.Brake);
         followerMotor.setNeutralMode(NeutralModeValue.Brake);
     }
@@ -32,12 +37,14 @@ public class AngleSubsystem extends SubsystemBase {
         // for setting the speed in the command file
         // motors going opposite directions, change to false if they need to go the same direction for any reason
         masterMotor.setControl(AngleConstants.kLauncherVoltageOut.withOutput(speed));
-        SmartDashboard.putNumber("ArmEncoder", armEncoder.get());     
+        //SmartDashboard.putNumber("ArmEncoder", armEncoder.get());     
 
     }
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("armMotorTicks", masterMotor.getSensorCollection().getIntegratedSensorPosition());
+       var temp = masterMotor.getRotorPosition();
+       //SmartDashboard.putNumber("ArmEncoder", armEncoder.get());  
+       SmartDashboard.putNumber("armMotorTicks", temp.getValueAsDouble());
     }
 
 }

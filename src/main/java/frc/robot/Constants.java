@@ -35,6 +35,11 @@ public final class Constants {
     // setting up the motors for the indexer to ID 22
     public static final int Indexer = 22;
   }
+  public static final class IntakeAngleConstants{
+    public static final VoltageOut kLauncherVoltageOut = new VoltageOut(0);
+    // setting up the motors for the indexer to ID 22
+    public static final int IntakeAngle = 23;
+  }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }

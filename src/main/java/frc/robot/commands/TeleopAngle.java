@@ -33,10 +33,19 @@ public class TeleopAngle extends Command {
     // 6 volts != 50% speed
     //set button number 1 - 12 on joystick : all labled ex; button 1 is trigger
 
-    if (soloStick.getRawButton(6)) {
+
+    double highLimit = 47.0;
+    //double lowLimit = 0;
+    double sourcePosition = 40;
+    double ampPosition = 36;
+
+    //DriverStation.reportError("Position " + subsystem.masterMotor.getRotorPosition().getValueAsDouble(), false);
+
+
+    if (soloStick.getRawButton(6) ) {
       //up
       subsystem.setMotors(3); 
-    } else if (soloStick.getRawButton(4)) {
+    } else if (soloStick.getRawButton(4)  ) {//&& subsystem.masterMotor.getRotorPosition().getValueAsDouble() >= lowLimit
       //down
       subsystem.setMotors(-3); 
     } else {

@@ -4,22 +4,22 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.IntakeAngle;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class TeleopLauncher extends Command {
-  private final Launcher subsystem;
+public class TeleopIntakeAngle extends Command {
+  private final IntakeAngle subsystem;
   private final Joystick soloStick;
-  public boolean toggle = false;
-  private int speed = 0;
-  public TeleopLauncher(Launcher subsystem, Joystick soloStick) {
-    this.subsystem = subsystem;
+
+  public TeleopIntakeAngle(IntakeAngle s_IntakeAngle, Joystick soloStick) {
+    this.subsystem = s_IntakeAngle;
     //solo stick is the joystick on the far right; all functions not for driving go on this joystick
     this.soloStick = soloStick;
-    addRequirements(subsystem);
+    addRequirements(s_IntakeAngle);
   }
 
   // Called when the command is initially scheduled.
@@ -32,33 +32,13 @@ public class TeleopLauncher extends Command {
     //voltage goes up to 12, not linear
     // 6 volts != 50% speed
     //set button number 1 - 12 on joystick : all labled ex; button 1 is trigger
-
-    //if (soloStick.getRawButton(1) && toggle == false) {
-      if (soloStick.getRawButton(1)){
-      //toggle is so its only a button press, not a button hold
-      speed = -6;
-      //toggle = true;
-    }else if (soloStick.getRawButton(3)) {
-      speed = 3;
-      //toggle = true;
-    }else if (soloStick.getRawButton(5)) {
-      speed = -3;
-    }
-    else if(soloStick.getRawButton(2)){
-      speed = 0;
-    }
-
-    subsystem.setMotors(speed);
-
-    /*
-    if(speed != 0){
-      // - NEGATIVE VALUES ONLY
-        subsystem.setMotors(speed);
-    }
-    else {
+    if (soloStick.getRawButton(12)) {
+      subsystem.setMotors(2);
+    } else if (soloStick.getRawButton(10)) {
+      subsystem.setMotors(-2);
+    } else {
       subsystem.setMotors(0);
     }
-    */
   }
   
 
