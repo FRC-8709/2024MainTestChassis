@@ -33,9 +33,9 @@ public class TeleopIntakeAngle extends Command {
     // 6 volts != 50% speed
     //set button number 1 - 12 on joystick : all labled ex; button 1 is trigger
     if (soloStick.getRawButton(12)) {
-      subsystem.setMotors(2);
+      subsystem.setMotors(4);
     } else if (soloStick.getRawButton(10)) {
-      subsystem.setMotors(-2);
+      subsystem.setMotors(-4);
     } else {
       subsystem.setMotors(0);
     }

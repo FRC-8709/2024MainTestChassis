@@ -1,16 +1,16 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeAngle extends SubsystemBase {
-    public final CANSparkMax IndexMotor;
+    public final TalonFX IndexMotor;
 
-    public IntakeAngle(CANSparkMax IndexMotor) {
+    public IntakeAngle(TalonFX IndexMotor) {
         this.IndexMotor = IndexMotor;
-        IndexMotor.setIdleMode(IdleMode.kBrake);
+        IndexMotor.setNeutralMode(NeutralModeValue.Brake);
     }
 
     public void setMotors(double speed) {

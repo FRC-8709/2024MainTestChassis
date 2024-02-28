@@ -5,7 +5,11 @@
 package frc.robot;
 
 import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -33,14 +37,33 @@ public final class Constants {
   public static final class IndexerConstants{
     public static final VoltageOut kLauncherVoltageOut = new VoltageOut(0);
     // setting up the motors for the indexer to ID 22
+    public static final int IndexerSensor = 9;
     public static final int Indexer = 22;
   }
   public static final class IntakeAngleConstants{
     public static final VoltageOut kLauncherVoltageOut = new VoltageOut(0);
     // setting up the motors for the indexer to ID 22
-    public static final int IntakeAngle = 23;
+    public static final int IntakeAngle = 25;
   }
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static final class AutoConstants { 
+        
+        public static double kMaxSpeedMetersPerSecond = 1;
+        public static double kMaxAccelerationMetersPerSecondSquared = 1;
+        
+        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+    
+        public static final double kPXController = 0.5;
+        public static final double kPYController = 0.5;
+        public static final double kPThetaController = 1;
+        
+        /* Constraint for the motion profilied robot angle controller */
+   
+        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+            new TrapezoidProfile.Constraints(
+                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    }
 }

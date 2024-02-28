@@ -10,12 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AngleSubsystem;
 
 /** An example command that uses an example subsystem. */
-public class TeleopAngle extends Command {
+public class TeleopLauncherAngle extends Command {
   private final AngleSubsystem subsystem;
   private final Joystick soloStick;
-  private boolean finished = false;
 
-  public TeleopAngle(AngleSubsystem subsystem, Joystick soloStick) {
+  public TeleopLauncherAngle(AngleSubsystem subsystem, Joystick soloStick) {
     this.subsystem = subsystem;
     //solo stick is the joystick on the far right; all functions not for driving go on this joystick
     this.soloStick = soloStick;
@@ -33,14 +32,10 @@ public class TeleopAngle extends Command {
     // 6 volts != 50% speed
     //set button number 1 - 12 on joystick : all labled ex; button 1 is trigger
 
-
-    double highLimit = 47.0;
-    //double lowLimit = 0;
-    double sourcePosition = 40;
-    double ampPosition = 36;
+    
 
     //DriverStation.reportError("Position " + subsystem.masterMotor.getRotorPosition().getValueAsDouble(), false);
-
+ 
 
     if (soloStick.getRawButton(6) ) {
       //up
@@ -48,7 +43,13 @@ public class TeleopAngle extends Command {
     } else if (soloStick.getRawButton(4)  ) {//&& subsystem.masterMotor.getRotorPosition().getValueAsDouble() >= lowLimit
       //down
       subsystem.setMotors(-3); 
-    } else {
+    } else if (soloStick.getRawButton(10) && subsystem.Encoder.getAbsolutePosition() <= 0.7892){
+        subsystem.setMotors(-4);
+    } else if (soloStick.getRawButton(12) && subsystem.Encoder.getAbsolutePosition() <= 0.915){
+        subsystem.setMotors(-4);
+    } else if (soloStick.getRawButton(8) && subsystem.Encoder.getAbsolutePosition() >= 0.7651){
+        subsystem.setMotors(4);
+    } else { // && subsystem.Encoder.getAbsolutePosition() <= 0.80
       subsystem.setMotors(0);
     }
 

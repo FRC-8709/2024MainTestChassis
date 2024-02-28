@@ -20,7 +20,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.commands.TeleopAngle;
+import frc.robot.commands.TeleopLauncherAngle;
 import frc.robot.commands.TeleopIndexer;
 import frc.robot.commands.TeleopIntakeAngle;
 import frc.robot.commands.TeleopLauncher;
@@ -56,9 +56,9 @@ public class RobotContainer {
   //private final Telemetry logger = new Telemetry(MaxSpeed);
   
   private final Launcher s_Launcher = new Launcher(new TalonFX(Constants.LauncherConstants.leftGripper), new TalonFX(Constants.LauncherConstants.rightGripper));
-  private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle),6, 5);
-  private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer));
-  private final IntakeAngle s_IntakeAngle = new IntakeAngle(new CANSparkMax(Constants.IntakeAngleConstants.IntakeAngle, CANSparkMax.MotorType.kBrushless));
+  private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle),8);
+  private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer), 9);
+  private final IntakeAngle s_IntakeAngle = new IntakeAngle(new TalonFX(Constants.IntakeAngleConstants.IntakeAngle));
 
   public RobotContainer() {
     configureBindings();
@@ -68,7 +68,7 @@ public class RobotContainer {
     );
 
     s_Angle.setDefaultCommand(
-      new TeleopAngle(s_Angle, soloJoystick)
+      new TeleopLauncherAngle(s_Angle, soloJoystick)
     );
 
     s_Indexer.setDefaultCommand(
@@ -76,7 +76,7 @@ public class RobotContainer {
     );
 
     s_IntakeAngle.setDefaultCommand(
-      new TeleopIntakeAngle(s_IntakeAngle, soloJoystick)
+      new TeleopIntakeAngle(s_IntakeAngle, leftJoystick)
     );
 
   }
