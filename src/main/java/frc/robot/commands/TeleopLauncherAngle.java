@@ -13,11 +13,13 @@ import frc.robot.subsystems.AngleSubsystem;
 public class TeleopLauncherAngle extends Command {
   private final AngleSubsystem subsystem;
   private final Joystick soloStick;
+  private final Joystick leftStick;
 
-  public TeleopLauncherAngle(AngleSubsystem subsystem, Joystick soloStick) {
+  public TeleopLauncherAngle(AngleSubsystem subsystem, Joystick soloStick, Joystick leftStick) {
     this.subsystem = subsystem;
     //solo stick is the joystick on the far right; all functions not for driving go on this joystick
     this.soloStick = soloStick;
+    this.leftStick = leftStick;
     addRequirements(subsystem);
   }
 
@@ -49,6 +51,8 @@ public class TeleopLauncherAngle extends Command {
         subsystem.setMotors(-4);
     } else if (soloStick.getRawButton(8) && subsystem.Encoder.getAbsolutePosition() >= 0.7651){
         subsystem.setMotors(4);
+    } else if (leftStick.getRawButton(8) && subsystem.Encoder.getAbsolutePosition() <= 0.7908){
+        subsystem.setMotors(-4);
     } else { // && subsystem.Encoder.getAbsolutePosition() <= 0.80
       subsystem.setMotors(0);
     }

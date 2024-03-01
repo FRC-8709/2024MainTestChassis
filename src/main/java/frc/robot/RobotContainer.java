@@ -21,13 +21,16 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.TeleopLauncherAngle;
+import frc.robot.commands.TeleopAuto;
 import frc.robot.commands.TeleopIndexer;
 import frc.robot.commands.TeleopIntakeAngle;
+import frc.robot.commands.TeleopIntakeUppies;
 import frc.robot.commands.TeleopLauncher;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AngleSubsystem;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.IntakeAngle;
+import frc.robot.subsystems.IntakeUppies;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -59,6 +62,7 @@ public class RobotContainer {
   private final AngleSubsystem s_Angle = new AngleSubsystem(new TalonFX(Constants.AngleConstants.LeftAngle), new TalonFX(Constants.AngleConstants.RightAngle),8);
   private final Indexer s_Indexer = new Indexer(new TalonFX(Constants.IndexerConstants.Indexer), 9);
   private final IntakeAngle s_IntakeAngle = new IntakeAngle(new TalonFX(Constants.IntakeAngleConstants.IntakeAngle));
+  private final IntakeUppies s_IntakeUppies = new IntakeUppies(new TalonFX(Constants.IntakeUppiesConstants.IntakeUppies), 7);
 
   public RobotContainer() {
     configureBindings();
@@ -66,9 +70,13 @@ public class RobotContainer {
     s_Launcher.setDefaultCommand(
       new TeleopLauncher(s_Launcher, soloJoystick)
     );
+    
+    s_IntakeUppies.setDefaultCommand(
+      new TeleopIntakeUppies(s_IntakeUppies, rightJoystick)
+    );
 
     s_Angle.setDefaultCommand(
-      new TeleopLauncherAngle(s_Angle, soloJoystick)
+      new TeleopLauncherAngle(s_Angle, soloJoystick, leftJoystick)
     );
 
     s_Indexer.setDefaultCommand(
@@ -106,6 +114,6 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return new TeleopAuto();
   }
 }

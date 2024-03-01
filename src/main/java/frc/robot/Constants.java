@@ -28,6 +28,21 @@ public final class Constants {
 
 
   }
+  public static final class ClimbingConstants{
+    public static final VoltageOut kClimbingVoltageOut = new VoltageOut(0);
+    // setting up the motors for the launcher to ID 24 and ID 23
+    public static final int leftGripper = 28;
+    public static final int rightGripper = 29;
+
+
+  }
+  public static final class IntakeUppiesConstants{
+    public static final VoltageOut kClimbingVoltageOut = new VoltageOut(0);
+    // setting up the motors for the launcher to ID 24 and ID 23
+    public static final int IntakeUppies = 30;
+
+
+  }
   public static final class AngleConstants{
     public static final VoltageOut kLauncherVoltageOut = new VoltageOut(0);
     // setting up the motors for the launcher angle to ID 19 and ID 18
