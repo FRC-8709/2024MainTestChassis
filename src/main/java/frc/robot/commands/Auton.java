@@ -1,34 +1,70 @@
 package frc.robot.commands;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.CommandSwerveDrivetrain;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 
-public class Auton extends SequentialCommandGroup{
-    String trajectoryJSON = "AutoPaths/test.wpilib.json";
+import java.util.List;
 
-    public class GetTrajectory {
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
-        public static Trajectory get(String trajectoryJSON){
-            Trajectory trajectory = new Trajectory();
-            try {
-                Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-                trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-            } catch (IOException ex) {
-                DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-            }
-            
-            return trajectory;
-        }
+
+public class Auton extends SequentialCommandGroup {
     
+    public Auton() throws InterruptedException{
+
+        TrajectoryConfig config =
+            new TrajectoryConfig(
+                    Constants.AutoConstants.kMaxSpeedMetersPerSecond,
+                    Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                .setKinematics(TunerConstants.swerveKinematics);
+
+        // An example trajectory to follow.  All units in meters.
+        Trajectory exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(0, 0, new Rotation2d(0)),
+                
+                // Pass through these two interior waypoints, making an 's' curve path
+                //List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+                List.of(new Translation2d(0, 1), new Translation2d(0, 2)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(0, 3, new Rotation2d(0)),
+                config);
+
+        var thetaController =
+            new ProfiledPIDController(
+                Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+        thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+        // SwerveControllerCommand swerveControllerCommand =
+        //     new SwerveControllerCommand(
+        //         exampleTrajectory,
+        //         s_Swerve::getPose,
+        //         TunerConstants.swerveKinematics,
+        //         new PIDController(Constants.AutoConstants.kPXController, 0, 0),
+        //         new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+        //         thetaController,
+        //         s_Swerve::setModuleStates,
+        //         s_Swerve);
+
+
+        //         addCommands(
+        //             new InstantCommand(() -> s_Swerve.resetOdometry(exampleTrajectory.getInitialPose())),
+        //             swerveControllerCommand
+        //         );
+
+       
     }
-}    
+    
+}
