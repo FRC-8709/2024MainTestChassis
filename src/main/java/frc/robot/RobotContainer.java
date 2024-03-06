@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.TeleopLauncherAngle;
 import frc.robot.commands.TeleopAuto;
+//import frc.robot.commands.TeleopAuto;
 import frc.robot.commands.TeleopIndexer;
 import frc.robot.commands.TeleopIntakeAngle;
 import frc.robot.commands.TeleopIntakeUppies;
@@ -114,6 +115,6 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
-    return new TeleopAuto();
+     return new TeleopAuto();
   }
 }
